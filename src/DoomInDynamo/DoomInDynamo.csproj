@@ -36,6 +36,10 @@
       <HintPath>$(DynamoForRevitDir)\DynamoServices.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="VMDataBridge">
+      <HintPath>$(DynamoForRevitDir)\VMDataBridge.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(DynamoForRevitDir)\Newtonsoft.Json.dll</HintPath>
       <Private>false</Private>

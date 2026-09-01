@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>DoomInDynamo.Functions</AssemblyName>
+    <RootNamespace>DoomInDynamo</RootNamespace>
+    <!-- Dynamo's zero-touch importer reads the node description and per-port
+         tooltips from this assembly's side-by-side XML documentation file - the
+         /// docs on RevitToWad.Export are user-facing UI text, not just comments. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- MultiReturn / IsVisibleInDynamoLibrary attributes live in DynamoServices
+         (Autodesk.DesignScript.Runtime namespace). Same local-install referencing
+         story as the main project - see Directory.Build.props. -->
+    <Reference Include="DynamoServices">
+      <HintPath>$(DynamoForRevitDir)\DynamoServices.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <!-- Revit API + Dynamo's Revit document plumbing. Only Revit\RevitExtractor.cs
+         touches types from these two, and no public signature in this assembly
+         exposes them - that keeps Dynamo Sandbox (no Revit process) able to import
+         the node library; the assemblies only actually load if the node runs. -->
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="RevitServices">
+      <HintPath>$(DynamoForRevitDir)\Revit\RevitServices.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

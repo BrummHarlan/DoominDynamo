@@ -31,13 +31,23 @@ namespace DoomInDynamo.Engine
         public string AudioStatus { get; }
 
         public DoomSession(string wadPath)
+            : this(wadPath, null)
+        {
+        }
+
+        public DoomSession(string wadPath, string pwadPath)
         {
             if (string.IsNullOrWhiteSpace(wadPath))
             {
                 throw new ArgumentException("A WAD file path is required.", nameof(wadPath));
             }
 
-            var args = new CommandLineArgs(new[] { "-iwad", wadPath });
+            // ManagedDoom's Wad.GetLumpNumber searches lumps last-to-first, so a PWAD
+            // passed via -file (loaded after the -iwad) wins any name collision - its
+            // map lumps override the IWAD's, which is exactly how vanilla PWADs work.
+            var args = string.IsNullOrWhiteSpace(pwadPath)
+                ? new CommandLineArgs(new[] { "-iwad", wadPath })
+                : new CommandLineArgs(new[] { "-iwad", wadPath, "-file", pwadPath });
 
             var config = new Config();
 

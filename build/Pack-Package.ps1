@@ -39,13 +39,21 @@ New-Item -ItemType Directory -Path $extraDir -Force | Out-Null
 
 $nodeBinDir = Join-Path $root "src\DoomInDynamo\bin\$Configuration"
 
-# Everything the build produced: DoomInDynamo.dll (the only one pkg.json's
-# node_libraries needs to list - see VENDOR_NOTICE.md), ManagedDoom.Engine.dll,
+# Everything the build produced: DoomInDynamo.dll, ManagedDoom.Engine.dll,
 # the audio deps it pulls in (DrippyAL/MeltySynth/Silk.NET.OpenAL/...), and the
 # runtimes\win-x64\native\soft_oal.dll native OpenAL-soft binary underneath -
 # CopyLocalLockFileAssemblies in Directory.Build.props is what makes all of
 # that land here instead of just the two DLLs we wrote ourselves.
 Copy-Item "$nodeBinDir\*" $binDir -Recurse -Force
+
+# The zero-touch half of the package builds as its own project (no project
+# reference ties it to the NodeModel assembly - they share nothing but the
+# package), so its output has to be collected separately. Both DLLs are listed
+# in pkg.json's node_libraries. Its Revit/Dynamo references are Private=false,
+# so only the one assembly (plus pdb/deps.json) lands here - Revit's own DLLs
+# never get redistributed.
+$functionsBinDir = Join-Path $root "src\DoomInDynamo.Functions\bin\$Configuration"
+Copy-Item "$functionsBinDir\*" $binDir -Recurse -Force
 
 # Trim the non-Windows OpenAL-soft native variants that Silk.NET.OpenAL.Soft.Native
 # ships for every platform - Dynamo for Revit only runs on win-x64, and dropping

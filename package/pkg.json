@@ -3,17 +3,20 @@
   "file_hash": null,
   "name": "DoomInDynamo",
   "version": "1.0.0",
-  "description": "Plays Doom inside a Dynamo node, using the ManagedDoom engine rendered onto the node's face. You supply your own WAD file - none is bundled. See https://github.com/ (update with your repo URL) for setup and licensing notes.",
+  "description": "Plays Doom inside a Dynamo node, using the ManagedDoom engine rendered onto the node's face - and converts the current Revit model into a playable Doom map (RevitToWad.Export) with randomly placed items, wired straight into the player node's pwad input. You supply your own IWAD file - none is bundled. See https://github.com/ (update with your repo URL) for setup and licensing notes.",
   "group": "",
   "keywords": [
     "doom",
     "game",
     "fun",
-    "will-it-run-doom"
+    "will-it-run-doom",
+    "revit",
+    "wad",
+    "export"
   ],
   "dependencies": [],
   "host_dependencies": [],
-  "contents": "Doom Player node (DoomInDynamo category)",
+  "contents": "Doom Player node and RevitToWad.Export node (DoomInDynamo category)",
   "engine_version": "4.1.1.5050",
   "engine": "dynamo",
   "engine_metadata": "",
@@ -21,7 +24,8 @@
   "repository_url": "",
   "contains_binaries": true,
   "node_libraries": [
-    "DoomInDynamo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+    "DoomInDynamo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "DoomInDynamo.Functions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
   ],
   "copyright_holder": "",
   "copyright_year": ""
